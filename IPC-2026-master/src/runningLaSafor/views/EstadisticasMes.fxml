@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root-pane" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runningLaSafor.controllers.EstadisticasMesController">
+
+    <!-- ══════════════════════════════════════════
+         TOP BAR
+    ══════════════════════════════════════════ -->
+    <top>
+        <HBox alignment="CENTER" styleClass="top-bar">
+            <Button fx:id="closeBtn" onAction="#handleClose" styleClass="top-btn,close-btn" text="✕" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="dateLabel" styleClass="date-label" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label fx:id="usernameLabel" styleClass="username-label" />
+                <Button fx:id="avatarBtn" onAction="#handleAvatarClick" styleClass="avatar-btn" />
+                <Button fx:id="logoutBtn" onAction="#handleLogout" styleClass="top-btn,logout-btn" text="⏏" />
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ══════════════════════════════════════════
+         LEFT SIDEBAR
+    ══════════════════════════════════════════ -->
+    <left>
+        <VBox fx:id="sidebar" spacing="0" styleClass="sidebar">
+
+            <!-- Logo / App name -->
+            <HBox fx:id="logoBox" alignment="CENTER_LEFT" spacing="12" styleClass="logo-box">
+                <Label styleClass="logo-icon" text="🏃" textFill="#4ade80" />
+                <Label fx:id="appNameLabel" styleClass="app-name" text="Running la Safor" />
+            </HBox>
+
+            <!-- Toggle button -->
+            <Button fx:id="sidebarToggleBtn" onAction="#handleSidebarToggle" styleClass="sidebar-toggle-btn" text="◀" />
+
+            <Separator styleClass="sidebar-separator" />
+
+            <!-- GENERAL section -->
+            <Label fx:id="generalLabel" styleClass="sidebar-section-label" text="GENERAL" />
+
+            <Button fx:id="dashboardBtn" onAction="#handleDashboard" styleClass="sidebar-btn">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="sidebar-icon" text="🏠" textFill="#e4e4e4" />
+                        <Label fx:id="dashboardLabel" styleClass="sidebar-btn-text" text="Dashboard" />
+                    </HBox>
+                </graphic>
+            </Button>
+
+            <Button fx:id="activitiesBtn" onAction="#handleActividades" styleClass="sidebar-btn">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="sidebar-icon" text="📋" textFill="#e4e4e4" />
+                        <Label fx:id="actividadesLabel" styleClass="sidebar-btn-text" text="Actividades" />
+                    </HBox>
+                </graphic>
+            </Button>
+
+            <Button fx:id="historialBtn" onAction="#handleHistorial" styleClass="sidebar-btn">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="sidebar-icon" text="📅" textFill="#e4e4e4" />
+                        <Label fx:id="historialLabel" styleClass="sidebar-btn-text" text="Historial Sesiones" />
+                    </HBox>
+                </graphic>
+            </Button>
+
+            <Separator styleClass="sidebar-separator" />
+
+            <!-- EXPLORAR section -->
+            <Label fx:id="explorarLabel" styleClass="sidebar-section-label" text="EXPLORAR" />
+
+            <Button fx:id="mapasBtn" onAction="#handleMapas" styleClass="sidebar-btn">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="sidebar-icon" text="🗺" textFill="#e4e4e4" />
+                        <Label fx:id="mapasLabel" styleClass="sidebar-btn-text" text="Gestión de Mapas" />
+                    </HBox>
+                </graphic>
+            </Button>
+
+            <Button fx:id="estadisticasBtn" onAction="#handleEstadisticas">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="sidebar-icon" text="📈" textFill="#e4e4e4" />
+                        <Label fx:id="estadisticasLabel" styleClass="sidebar-btn-text" text="Estadísticas Mes" />
+                    </HBox>
+                </graphic>
+            <styleClass>
+               <String fx:value="sidebar-btn" />
+               <String fx:value="sidebar-btn-active" />
+            </styleClass>
+            </Button>
+
+            <Separator styleClass="sidebar-separator" />
+
+            <!-- USUARIO section -->
+            <Label fx:id="usuarioLabel" styleClass="sidebar-section-label" text="USUARIO" />
+
+            <Button fx:id="perfilBtn" onAction="#handlePerfil" styleClass="sidebar-btn">
+                <graphic>
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label styleClass="sidebar-icon" text="⚙" textFill="#e4e4e4" />
+                        <Label fx:id="perfilLabel" styleClass="sidebar-btn-text" text="Configuración Perfil" />
+                    </HBox>
+                </graphic>
+            </Button>
+
+            <Region VBox.vgrow="ALWAYS" />
+
+        </VBox>
+    </left>
+
+    <!-- ══════════════════════════════════════════
+         CENTER — main content
+    ══════════════════════════════════════════ -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="main-scroll">
+            <VBox fx:id="mainContent" maxWidth="9999.0" spacing="28" styleClass="main-content">
+                <padding><Insets bottom="40" left="48" right="48" top="40" /></padding>
+
+                <!-- ── Encabezado ── -->
+                <VBox maxWidth="9999.0" spacing="4">
+                    <Label styleClass="greeting-title" text="Estadísticas del mes" />
+                    <Label styleClass="greeting-sub" text="¿Cuántos retos has conquistado últimamente?" />
+                </VBox>
+
+                <!-- ── Separador visual ── -->
+                <Separator styleClass="sidebar-separator" />
+
+                <!-- ── Filtros ── -->
+                <HBox alignment="CENTER_LEFT" spacing="20" styleClass="filter-bar">
+                    <padding>
+                        <Insets bottom="8" left="16" right="16" top="8" />
+                    </padding>
+
+                    <!-- Mes -->
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label styleClass="filter-label" text="Mes:" />
+                        <ComboBox fx:id="comboMes" prefHeight="34.0" prefWidth="130.0" styleClass="filter-combo" />
+                    </HBox>
+
+                    <Separator orientation="VERTICAL" styleClass="sidebar-separator" visible="false" />
+
+                    <!-- Año -->
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label styleClass="filter-label" text="Año:" />
+                        <ComboBox fx:id="comboAnio" prefHeight="34.0" prefWidth="100.0" styleClass="filter-combo" />
+                    </HBox>
+
+                    <Separator orientation="VERTICAL" styleClass="sidebar-separator" visible="false" />
+
+                    <!-- Categoría -->
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label styleClass="filter-label" text="Categoría:" />
+                        <ComboBox fx:id="comboCategoria" prefHeight="34.0" prefWidth="160.0" styleClass="filter-combo" />
+                    </HBox>
+
+                    <Separator orientation="VERTICAL" styleClass="sidebar-separator" visible="false" />
+
+                    <!-- Mapa -->
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label styleClass="filter-label" text="Mapa:" />
+                        <ComboBox fx:id="comboMapa" prefHeight="34.0" prefWidth="180.0" styleClass="filter-combo" />
+                    </HBox>
+
+                    <Region HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <!-- ── Tarjetas de estadísticas ── -->
+                <HBox maxWidth="9999.0" spacing="20.0">
+
+                    <!-- TIEMPO TOTAL -->
+                    <VBox maxWidth="9999.0" spacing="6.0" HBox.hgrow="ALWAYS">
+                        <styleClass>
+                            <String fx:value="stat-card" />
+                            <String fx:value="stat-card-green" />
+                        </styleClass>
+                        <Label styleClass="stat-icon" text="⏱" />
+                        <Label fx:id="statTiempo" maxWidth="9999.0" styleClass="stat-value" text="—" />
+                        <Label maxWidth="9999.0" styleClass="stat-label" text="TIEMPO TOTAL" wrapText="true" />
+                    </VBox>
+
+                    <!-- DISTANCIA TOTAL -->
+                    <VBox maxWidth="9999.0" spacing="6.0" HBox.hgrow="ALWAYS">
+                        <styleClass>
+                            <String fx:value="stat-card" />
+                            <String fx:value="stat-card-green" />
+                        </styleClass>
+                        <Label styleClass="stat-icon" text="📏" />
+                        <Label fx:id="statDistancia" maxWidth="9999.0" styleClass="stat-value" text="—" />
+                        <Label maxWidth="9999.0" styleClass="stat-label" text="DISTANCIA TOTAL" wrapText="true" />
+                    </VBox>
+
+                    <!-- ASCENSO TOTAL -->
+                    <VBox maxWidth="9999.0" spacing="6.0" HBox.hgrow="ALWAYS">
+                        <styleClass>
+                            <String fx:value="stat-card" />
+                            <String fx:value="stat-card-green" />
+                        </styleClass>
+                        <Label styleClass="stat-icon" text="🏔" />
+                        <Label fx:id="statAscenso" maxWidth="9999.0" styleClass="stat-value" text="—" />
+                        <Label maxWidth="9999.0" styleClass="stat-label" text="ASCENSO TOTAL" wrapText="true" />
+                    </VBox>
+
+                    <!-- DESCENSO TOTAL -->
+                    <VBox maxWidth="9999.0" spacing="6.0" HBox.hgrow="ALWAYS">
+                        <styleClass>
+                            <String fx:value="stat-card" />
+                            <String fx:value="stat-card-green" />
+                        </styleClass>
+                        <Label styleClass="stat-icon" text="↘" />
+                        <Label fx:id="statDescenso" maxWidth="9999.0" styleClass="stat-value" text="—" />
+                        <Label maxWidth="9999.0" styleClass="stat-label" text="DESCENSO TOTAL" wrapText="true" />
+                    </VBox>
+
+                    <!-- ACTIVIDADES -->
+                    <VBox maxWidth="9999.0" spacing="6.0" HBox.hgrow="ALWAYS">
+                        <styleClass>
+                            <String fx:value="stat-card" />
+                            <String fx:value="stat-card-green" />
+                        </styleClass>
+                        <Label styleClass="stat-icon" text="📋" />
+                        <Label fx:id="statActividades" maxWidth="9999.0" styleClass="stat-value" text="—" />
+                        <Label maxWidth="9999.0" styleClass="stat-label" text="ACTIVIDADES" wrapText="true" />
+                    </VBox>
+
+                </HBox>
+            <VBox prefHeight="650.0" spacing="15.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label fx:id="labelPeriodo" styleClass="section-title" text="Actividades del periodo" />
+                  <ScrollPane styleClass="main-scroll">
+                     <content>
+                        <VBox fx:id="listaActividadesContainer" spacing="10.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

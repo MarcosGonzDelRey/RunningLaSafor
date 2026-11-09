@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="799.0" prefWidth="1165.0" styleClass="root-pane" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runningLaSafor.controllers.configuracion">
+
+   <!-- ══════════════════════════════════════════
+        TOP BAR
+   ══════════════════════════════════════════ -->
+   <top>
+      <HBox alignment="CENTER" styleClass="top-bar">
+         <Button fx:id="closeBtn" onAction="#handleClose" styleClass="top-btn,close-btn" text="✕" />
+         <Region HBox.hgrow="ALWAYS" />
+         <Label fx:id="dateLabel" styleClass="date-label" />
+         <Region HBox.hgrow="ALWAYS" />
+         <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Label fx:id="usernameLabel" styleClass="username-label" />
+            <Button fx:id="avatarBtn" onAction="#handleAvatarClick" styleClass="avatar-btn" />
+            <Button fx:id="cerrar" onAction="#handleLogout" styleClass="top-btn,logout-btn" text="⏏" />
+         </HBox>
+      </HBox>
+   </top>
+
+   <!-- ══════════════════════════════════════════
+        LEFT SIDEBAR
+   ══════════════════════════════════════════ -->
+   <left>
+      <VBox fx:id="sidebar" spacing="0" styleClass="sidebar">
+
+         <!-- Logo / App name -->
+         <HBox fx:id="logoBox" alignment="CENTER_LEFT" spacing="12" styleClass="logo-box">
+            <Label styleClass="logo-icon" text="🏃" textFill="#4ade80" />
+            <Label fx:id="appNameLabel" styleClass="app-name" text="Running Safor" />
+         </HBox>
+
+         <!-- Toggle button -->
+         <Button fx:id="sidebarToggleBtn" onAction="#handleSidebarToggle" styleClass="sidebar-toggle-btn" text="◀" />
+
+         <Separator styleClass="sidebar-separator" />
+
+         <!-- GENERAL section -->
+         <Label fx:id="generalLabel" styleClass="sidebar-section-label" text="GENERAL" />
+
+         <Button fx:id="dashboardBtn" onAction="#cambiarmenu" styleClass="sidebar-btn">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label styleClass="sidebar-icon" text="🏠" textFill="#e4e4e4" />
+                  <Label fx:id="dashboardLabel" styleClass="sidebar-btn-text" text="Dashboard" />
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Button fx:id="activitiesBtn" onAction="#cambiaractividades" styleClass="sidebar-btn">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label styleClass="sidebar-icon" text="📋" textFill="#e4e4e4" />
+                  <Label fx:id="actividadesLabel" styleClass="sidebar-btn-text" text="Actividades" />
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Button fx:id="historialBtn" onAction="#cambiarhistorial" styleClass="sidebar-btn">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label styleClass="sidebar-icon" text="📅" textFill="#e4e4e4" />
+                  <Label fx:id="historialLabel" styleClass="sidebar-btn-text" text="Historial Sesiones" />
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Separator styleClass="sidebar-separator" />
+
+         <!-- EXPLORAR section -->
+         <Label fx:id="explorarLabel" styleClass="sidebar-section-label" text="EXPLORAR" />
+
+         <Button fx:id="mapasBtn" onAction="#cambiarmapas" styleClass="sidebar-btn">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label styleClass="sidebar-icon" text="🗺" textFill="#e4e4e4" />
+                  <Label fx:id="mapasLabel" styleClass="sidebar-btn-text" text="Gestión de Mapas" />
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Button fx:id="estadisticasBtn" onAction="#cambiarestadistica" styleClass="sidebar-btn">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label styleClass="sidebar-icon" text="📈" textFill="#e4e4e4" />
+                  <Label fx:id="estadisticasLabel" styleClass="sidebar-btn-text" text="Estadísticas Mes" />
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Separator styleClass="sidebar-separator" />
+
+         <!-- USUARIO section -->
+         <Label fx:id="usuarioLabel" styleClass="sidebar-section-label" text="USUARIO" />
+
+         <!-- Perfil activo -->
+         <Button fx:id="perfilBtn" onAction="#handleAvatarClick" styleClass="sidebar-btn,sidebar-btn-active">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label styleClass="sidebar-icon" text="⚙" textFill="#e4e4e4" />
+                  <Label fx:id="perfilLabel" styleClass="sidebar-btn-text" text="Configuración Perfil" />
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Region VBox.vgrow="ALWAYS" />
+
+      </VBox>
+   </left>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <VBox styleClass="sidebar">
+               <children>
+                  <Label prefHeight="28.0" prefWidth="161.0" styleClass="act-annot-title" text="Configuración perfil">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Separator prefWidth="200.0" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <VBox prefHeight="113.0" prefWidth="360.0" styleClass="sidebar">
+               <children>
+                  <Label styleClass="act-annot-title" text="Información personal">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="213.0" prefWidth="528.0">
+                           <children>
+                              <HBox prefHeight="90.0" prefWidth="354.0" styleClass="sidebar">
+                                 <children>
+                                    <Region prefWidth="29.0" />
+                                    <Label alignment="TOP_LEFT" prefHeight="17.0" prefWidth="111.0" styleClass="act-page-sub" text="Nickname">
+                                       <HBox.margin>
+                                          <Insets left="15.0" right="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="panelnickname" editable="false" prefHeight="33.0" prefWidth="166.0" styleClass="act-search-field">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox prefHeight="79.0" prefWidth="358.0" styleClass="sidebar">
+                                 <children>
+                                    <Region prefWidth="29.0" />
+                                    <Label alignment="TOP_LEFT" prefHeight="32.0" prefWidth="125.0" styleClass="act-page-sub" text="Correo electrónico">
+                                       <padding>
+                                          <Insets right="15.0" top="15.0" />
+                                       </padding>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="correoelectronico" prefHeight="33.0" prefWidth="209.0" styleClass="act-search-field">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <HBox styleClass="sidebar">
+                                 <children>
+                                    <Region prefWidth="29.0" />
+                                    <Label prefHeight="18.0" prefWidth="124.0" styleClass="act-page-sub" text="Fecha de nacimiento">
+                                       <HBox.margin>
+                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <DatePicker fx:id="fechadenacimiento" prefHeight="23.0" prefWidth="213.0">
+                                       <HBox.margin>
+                                          <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Label alignment="CENTER" contentDisplay="CENTER" styleClass="act-page-sub" text="Foto actual">
+                           <HBox.margin>
+                              <Insets left="15.0" top="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="37.0" text="Button" visible="false" />
+                        <ImageView fx:id="imageViewPerfil" fitHeight="203.0" fitWidth="184.0" onMouseClicked="#seleccionarImagen" opacity="0.93" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="40.0" top="15.0" />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="46.0" prefWidth="360.0" styleClass="sidebar">
+               <children>
+                  <Region prefHeight="51.0" prefWidth="29.0" />
+                  <Button fx:id="btnguardar" mnemonicParsing="false" onAction="#guardar" prefHeight="31.0" prefWidth="791.0" styleClass="act-add-annot-btn" text="Guardar cambios">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="11.0" prefWidth="310.0" styleClass="sidebar">
+               <children>
+                  <Label prefHeight="54.0" prefWidth="184.0" styleClass="act-annot-title" text="Seguridad">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox prefHeight="86.0" prefWidth="310.0" styleClass="sidebar">
+               <children>
+                  <Separator prefWidth="200.0" />
+                  <HBox fx:id="panelcambiarcontraseña" onMouseClicked="#cambiarcontraseña" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="31.0" prefWidth="46.0" styleClass="act-add-annot-btn" text="🔒" textFill="#e4e4e4">
+                           <HBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label styleClass="act-annot-title" text="Cambiar contraseña">
+                           <HBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="seccioneliminar" onMouseClicked="#eliminar" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="33.0" prefWidth="48.0" styleClass="login-error-label" text="  🗑" textFill="#f20c0c">
+                           <HBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label styleClass="act-annot-title" text="Eliminar cuenta">
+                           <HBox.margin>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

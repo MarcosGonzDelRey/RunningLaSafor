@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runningLaSafor.controllers.RegisterController">
+
+    <center>
+        <StackPane prefHeight="646.0" prefWidth="800.0" styleClass="login-bg">
+
+            <!-- Card -->
+            <VBox alignment="TOP_CENTER" maxHeight="560" maxWidth="380" spacing="0" styleClass="login-card">
+
+                <!-- Logo / App header -->
+                <VBox alignment="CENTER" prefHeight="82.0" prefWidth="378.0" spacing="8" styleClass="login-logo-box">
+                    <Label styleClass="logo-icon" text="🏃" textFill="#4ade80" />
+                    <Label styleClass="app-name" text="Running la Safor" />
+                </VBox>
+
+                <Separator styleClass="login-divider" />
+
+                <!-- Form body -->
+                <VBox spacing="16" styleClass="login-form-body">
+
+                    <Label styleClass="login-title" text="Crear cuenta" />
+
+                    <!-- Username -->
+                    <VBox spacing="6">
+                        <Label styleClass="login-field-label" text="Usuario" />
+                        <TextField fx:id="nickField" promptText="Tu nombre de usuario" styleClass="login-field" />
+                    </VBox>
+
+                    <!-- Email -->
+                    <VBox spacing="6">
+                        <Label styleClass="login-field-label" text="Email" />
+                        <TextField fx:id="emailField" promptText="correo@ejemplo.com" styleClass="login-field" />
+                    </VBox>
+
+                    <!-- Password -->
+                    <VBox spacing="6">
+                        <Label styleClass="login-field-label" text="Contraseña" />
+                        <PasswordField fx:id="passField" promptText="••••••••" styleClass="login-field" />
+                    </VBox>
+
+                    <!-- Birth date -->
+                    <VBox spacing="6">
+                        <Label styleClass="login-field-label" text="Fecha de nacimiento" />
+                        <DatePicker fx:id="birthDatePicker" maxWidth="Infinity" promptText="dd/mm/aaaa" styleClass="login-datepicker" />
+                    </VBox>
+
+                    <!-- Error label (hidden by default, shown by controller) -->
+                    <Label fx:id="errorLabel" managed="false" styleClass="login-error-label" text="" visible="false" wrapText="true" />
+
+                    <!-- Register button -->
+                    <Button defaultButton="true" maxWidth="Infinity" onAction="#handleRegister" styleClass="import-btn" text="✔  Registrarse" />
+
+                    <!-- Back to login link -->
+                    <HBox alignment="CENTER">
+                        <Hyperlink onAction="#volverAlLogin" styleClass="login-hyperlink" text="¿Ya tienes cuenta? Inicia sesión" />
+                    </HBox>
+
+                </VBox>
+
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>

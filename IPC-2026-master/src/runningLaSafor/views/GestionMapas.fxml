@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="root-pane" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runningLaSafor.controllers.GestionMapasController">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox alignment="CENTER" styleClass="top-bar">
+            <Button fx:id="closeBtn" onAction="#handleClose" styleClass="top-btn,close-btn" text="✕" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="dateLabel" styleClass="date-label" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label fx:id="usernameLabel" styleClass="username-label" />
+                <Button fx:id="avatarBtn" onAction="#handleAvatarClick" styleClass="avatar-btn" />
+                <Button fx:id="logoutBtn" onAction="#handleLogout" styleClass="top-btn,logout-btn" text="⏏" />
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- LEFT SIDEBAR -->
+    <left>
+        <VBox fx:id="sidebar" spacing="0" styleClass="sidebar">
+            <HBox fx:id="logoBox" alignment="CENTER_LEFT" spacing="12" styleClass="logo-box">
+                <Label styleClass="logo-icon" text="🏃" textFill="#4ade80" />
+                <Label fx:id="appNameLabel" styleClass="app-name" text="Running la Safor" />
+            </HBox>
+            <Button fx:id="sidebarToggleBtn" onAction="#handleSidebarToggle" styleClass="sidebar-toggle-btn" text="◀" />
+            <Separator styleClass="sidebar-separator" />
+
+            <Label fx:id="generalLabel" styleClass="sidebar-section-label" text="GENERAL" />
+            <Button fx:id="dashboardBtn" onAction="#handleDashboard" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="🏠" textFill="WHITE" />
+                    <Label fx:id="dashboardLabel" styleClass="sidebar-btn-text" text="Dashboard" />
+                </HBox></graphic>
+            </Button>
+            <Button fx:id="activitiesBtn" onAction="#handleActividades" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="📋" textFill="WHITE" />
+                    <Label fx:id="actividadesLabel" styleClass="sidebar-btn-text" text="Actividades" />
+                </HBox></graphic>
+            </Button>
+            <Button fx:id="historialBtn" onAction="#handleHistorial" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="📅" textFill="WHITE" />
+                    <Label fx:id="historialLabel" styleClass="sidebar-btn-text" text="Historial Sesiones" />
+                </HBox></graphic>
+            </Button>
+            <Separator styleClass="sidebar-separator" />
+
+            <Label fx:id="explorarLabel" styleClass="sidebar-section-label" text="EXPLORAR" />
+            <Button fx:id="mapasBtn" onAction="#handleMapas" styleClass="sidebar-btn,sidebar-btn-active">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="🗺" textFill="WHITE" />
+                    <Label fx:id="mapasLabel" styleClass="sidebar-btn-text" text="Gestión de Mapas" />
+                </HBox></graphic>
+            </Button>
+            <Button fx:id="estadisticasBtn" onAction="#handleEstadisticas" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="📈" textFill="WHITE" />
+                    <Label fx:id="estadisticasLabel" styleClass="sidebar-btn-text" text="Estadísticas Mes" />
+                </HBox></graphic>
+            </Button>
+            <Separator styleClass="sidebar-separator" />
+
+            <Label fx:id="usuarioLabel" styleClass="sidebar-section-label" text="USUARIO" />
+            <Button fx:id="perfilBtn" onAction="#handlePerfil" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="⚙" textFill="WHITE" />
+                    <Label fx:id="perfilLabel" styleClass="sidebar-btn-text" text="Configuración Perfil" />
+                </HBox></graphic>
+            </Button>
+            <Region VBox.vgrow="ALWAYS" />
+        </VBox>
+    </left>
+
+    <!-- CENTER -->
+    <center>
+        <VBox spacing="0" styleClass="main-content">
+
+            <!-- Page header -->
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="act-page-header">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label styleClass="act-page-title" text="Gestión de Mapas" />
+                    <Label styleClass="act-page-sub" text="Consulta, añade y elimina regiones de mapa del sistema." />
+                </VBox>
+            </HBox>
+
+            <!-- Main split: list LEFT · detail+form RIGHT -->
+            <HBox spacing="0" VBox.vgrow="ALWAYS">
+
+                <!-- LEFT — map list -->
+                <VBox minWidth="260" prefWidth="301.0" spacing="0" styleClass="act-list-panel">
+                    <HBox alignment="CENTER_LEFT" spacing="8" styleClass="act-search-bar">
+                        <Label fx:id="mapCountLabel" styleClass="act-page-info" text="0 mapas registrados" HBox.hgrow="ALWAYS" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" prefHeight="711.0" prefWidth="234.0" styleClass="act-list-scroll" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="mapListContainer" spacing="2" styleClass="act-list-inner" />
+                    </ScrollPane>
+                </VBox>
+
+                <!-- RIGHT — preview + add form -->
+                <VBox spacing="0" styleClass="act-detail-panel" HBox.hgrow="ALWAYS">
+
+                    <!-- Map preview -->
+                    <VBox spacing="0" styleClass="map-preview-section">
+                        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="act-detail-header">
+                            <Label fx:id="previewTitle" styleClass="act-detail-title" text="Vista previa" HBox.hgrow="ALWAYS" />
+                            <Button fx:id="deleteMapBtn" disable="true" onAction="#handleDeleteMap" styleClass="act-menu-btn" text="🗑  Eliminar mapa" />
+                        </HBox>
+
+                        <StackPane prefHeight="240" styleClass="map-preview-container">
+                            <VBox fx:id="previewEmpty" alignment="CENTER" prefHeight="261.0" prefWidth="410.0" spacing="8" visible="true">
+                                <Label styleClass="act-empty-icon" text="🗺" textFill="WHITE" />
+                                <Label styleClass="act-empty-text" text="Selecciona un mapa para ver su vista previa" />
+                            </VBox>
+                            <ImageView fx:id="previewImage" fitHeight="240" fitWidth="600" managed="false" preserveRatio="true" visible="false" />
+                        </StackPane>
+
+                        <!-- Selected map info -->
+                        <HBox fx:id="previewInfoBox" managed="false" spacing="24" styleClass="map-info-strip" visible="false">
+                            <VBox spacing="2">
+                                <Label styleClass="act-stat-row-label" text="LAT MÍN / MÁX" />
+                                <Label fx:id="previewLat" styleClass="act-stat-row-value" text="—" />
+                            </VBox>
+                            <VBox spacing="2">
+                                <Label styleClass="act-stat-row-label" text="LON MÍN / MÁX" />
+                                <Label fx:id="previewLon" styleClass="act-stat-row-value" text="—" />
+                            </VBox>
+                            <VBox spacing="2">
+                                <Label styleClass="act-stat-row-label" text="ESTADO" />
+                                <Label fx:id="previewStatus" styleClass="act-stat-row-value" text="—" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <Separator styleClass="act-stat-separator" />
+
+                    <!-- Add new map form -->
+                    <ScrollPane fitToWidth="true" styleClass="act-stats-scroll" VBox.vgrow="ALWAYS">
+                        <VBox spacing="0" styleClass="act-stats-panel">
+
+                            <Label styleClass="act-stats-title" text="Añadir nuevo mapa" />
+
+                            <!-- Name -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Label minWidth="140" styleClass="act-stat-row-label" text="Nombre:" HBox.hgrow="NEVER" />
+                                <TextField fx:id="newMapName" promptText="Ej: Montanejos" styleClass="act-search-field" HBox.hgrow="ALWAYS" />
+                            </HBox>
+
+                            <!-- Image file -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Label minWidth="140" styleClass="act-stat-row-label" text="Imagen JPG:" HBox.hgrow="NEVER" />
+                                <Label fx:id="selectedFileLabel" styleClass="act-page-info" text="Sin fichero seleccionado" HBox.hgrow="ALWAYS" />
+                                <Button onAction="#handleBrowseImage" styleClass="act-page-btn" text="Examinar…" />
+                            </HBox>
+
+                            <!-- Latitude -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Label minWidth="140" styleClass="act-stat-row-label" text="Lat. mínima:" HBox.hgrow="NEVER" />
+                                <TextField fx:id="newLatMin" promptText="39.334297" styleClass="act-search-field" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Label minWidth="140" styleClass="act-stat-row-label" text="Lat. máxima:" HBox.hgrow="NEVER" />
+                                <TextField fx:id="newLatMax" promptText="39.554883" styleClass="act-search-field" HBox.hgrow="ALWAYS" />
+                            </HBox>
+
+                            <!-- Longitude -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Label minWidth="140" styleClass="act-stat-row-label" text="Lon. mínima:" HBox.hgrow="NEVER" />
+                                <TextField fx:id="newLonMin" promptText="-0.505371" styleClass="act-search-field" HBox.hgrow="ALWAYS" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Label minWidth="140" styleClass="act-stat-row-label" text="Lon. máxima:" HBox.hgrow="NEVER" />
+                                <TextField fx:id="newLonMax" promptText="-0.285645" styleClass="act-search-field" HBox.hgrow="ALWAYS" />
+                            </HBox>
+
+                            <!-- Status / error label -->
+                            <Label fx:id="formErrorLabel" managed="false" styleClass="login-error-label" text="" visible="false" wrapText="true" />
+
+                            <!-- Add button -->
+                            <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                <Button maxWidth="Infinity" onAction="#handleAddMap" styleClass="import-btn" text="＋  Añadir mapa al sistema" HBox.hgrow="ALWAYS" />
+                            </HBox>
+
+                        </VBox>
+                    </ScrollPane>
+
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

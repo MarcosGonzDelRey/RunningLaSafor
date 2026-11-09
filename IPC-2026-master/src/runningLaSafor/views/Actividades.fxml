@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="root-pane" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="runningLaSafor.controllers.ActividadesController">
+
+    <!-- ══════════════════════════════════════════
+         TOP BAR
+    ══════════════════════════════════════════ -->
+    <top>
+        <HBox alignment="CENTER" styleClass="top-bar">
+            <Button fx:id="closeBtn" onAction="#handleClose" styleClass="top-btn,close-btn" text="✕" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="dateLabel" styleClass="date-label" />
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label fx:id="usernameLabel" styleClass="username-label" />
+                <Button fx:id="avatarBtn" onAction="#handleAvatarClick" styleClass="avatar-btn" />
+                <Button fx:id="logoutBtn" onAction="#handleLogout" styleClass="top-btn,logout-btn" text="⏏" />
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ══════════════════════════════════════════
+         LEFT SIDEBAR
+    ══════════════════════════════════════════ -->
+    <left>
+        <VBox fx:id="sidebar" spacing="0" styleClass="sidebar">
+            <HBox fx:id="logoBox" alignment="CENTER_LEFT" spacing="12" styleClass="logo-box">
+                <Label styleClass="logo-icon" text="🏃" textFill="#4ade80" />
+                <Label fx:id="appNameLabel" styleClass="app-name" text="Running la Safor" />
+            </HBox>
+            <Button fx:id="sidebarToggleBtn" onAction="#handleSidebarToggle" styleClass="sidebar-toggle-btn" text="◀" />
+            <Separator styleClass="sidebar-separator" />
+
+            <Label fx:id="generalLabel" styleClass="sidebar-section-label" text="GENERAL" />
+            <Button fx:id="dashboardBtn" onAction="#handleDashboard" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="🏠" textFill="#e4e4e4" />
+                    <Label fx:id="dashboardLabel" styleClass="sidebar-btn-text" text="Dashboard" />
+                </HBox></graphic>
+            </Button>
+            <Button fx:id="activitiesBtn" onAction="#handleActividades" styleClass="sidebar-btn,sidebar-btn-active">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="📋" textFill="#e4e4e4" />
+                    <Label fx:id="actividadesLabel" styleClass="sidebar-btn-text" text="Actividades" />
+                </HBox></graphic>
+            </Button>
+            <Button fx:id="historialBtn" onAction="#handleHistorial" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="📅" textFill="#e4e4e4" />
+                    <Label fx:id="historialLabel" styleClass="sidebar-btn-text" text="Historial Sesiones" />
+                </HBox></graphic>
+            </Button>
+            <Separator styleClass="sidebar-separator" />
+
+            <Label fx:id="explorarLabel" styleClass="sidebar-section-label" text="EXPLORAR" />
+            <Button fx:id="mapasBtn" onAction="#handleMapas" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="🗺" textFill="#e4e4e4" />
+                    <Label fx:id="mapasLabel" styleClass="sidebar-btn-text" text="Gestión de Mapas" />
+                </HBox></graphic>
+            </Button>
+            <Button fx:id="estadisticasBtn" onAction="#handleEstadisticas" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="📈" textFill="#e4e4e4" />
+                    <Label fx:id="estadisticasLabel" styleClass="sidebar-btn-text" text="Estadísticas Mes" />
+                </HBox></graphic>
+            </Button>
+            <Separator styleClass="sidebar-separator" />
+
+            <Label fx:id="usuarioLabel" styleClass="sidebar-section-label" text="USUARIO" />
+            <Button fx:id="perfilBtn" onAction="#handlePerfil" styleClass="sidebar-btn">
+                <graphic><HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label styleClass="sidebar-icon" text="⚙" textFill="#e4e4e4" />
+                    <Label fx:id="perfilLabel" styleClass="sidebar-btn-text" text="Configuración Perfil" />
+                </HBox></graphic>
+            </Button>
+            <Region VBox.vgrow="ALWAYS" />
+        </VBox>
+    </left>
+
+    <!-- ══════════════════════════════════════════
+         CENTER — Actividades content
+    ══════════════════════════════════════════ -->
+    <center>
+        <VBox spacing="0" styleClass="main-content">
+
+            <!-- ── Page header + Import button ── -->
+            <HBox alignment="CENTER_LEFT" spacing="16" styleClass="act-page-header">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label styleClass="act-page-title" text="Actividades" />
+                    <Label styleClass="act-page-sub" text="Consulta y gestiona tus actividades registradas." />
+                </VBox>
+                <Button fx:id="importGpxBtn" onAction="#handleImportGPX" styleClass="import-btn" text="⬆  IMPORTAR GPX" />
+            </HBox>
+            <!-- ── Main split: list LEFT · detail RIGHT ── -->
+            <HBox spacing="0" VBox.vgrow="ALWAYS">
+
+                <!-- ════════════════════════════
+                     LEFT — activity list
+                ════════════════════════════ -->
+                <VBox minWidth="250" prefWidth="290" spacing="0" styleClass="act-list-panel">
+                    <HBox alignment="CENTER" spacing="8" styleClass="act-search-bar">
+                        <TextField fx:id="searchField" onKeyReleased="#handleSearch" promptText="Buscar actividad…" styleClass="act-search-field" HBox.hgrow="ALWAYS" />
+                        <Button onAction="#handleFilter" styleClass="act-filter-btn" text="⊟" />
+                    </HBox>
+                    <ScrollPane fitToWidth="true" styleClass="act-list-scroll" VBox.vgrow="ALWAYS">
+                        <VBox fx:id="actListContainer" spacing="2" styleClass="act-list-inner" />
+                    </ScrollPane>
+                    <HBox alignment="CENTER_LEFT" spacing="0" styleClass="act-pagination-bar">
+                        <Label fx:id="paginationInfoLabel" styleClass="act-page-info" text="Mostrando 0–0 de 0 actividades" HBox.hgrow="ALWAYS" />
+                        <HBox alignment="CENTER_RIGHT" spacing="4">
+                            <Button fx:id="prevPageBtn" disable="true" onAction="#handlePrevPage" styleClass="act-page-btn" text="‹" />
+                            <Label fx:id="pageNumberLabel" styleClass="act-page-num" text="1" />
+                            <Button fx:id="nextPageBtn" disable="true" onAction="#handleNextPage" styleClass="act-page-btn" text="›" />
+                        </HBox>
+                    </HBox>
+                </VBox>
+
+                <!-- ════════════════════════════
+                     RIGHT — detail panel
+                ════════════════════════════ -->
+                <VBox fx:id="detailPanel" spacing="0" styleClass="act-detail-panel" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+
+                    <!-- Empty state -->
+                    <VBox fx:id="emptyDetail" alignment="CENTER" managed="true" spacing="12" visible="true" VBox.vgrow="ALWAYS">
+                        <Label styleClass="act-empty-icon" text="🏃" />
+                        <Label styleClass="act-empty-text" text="Selecciona una actividad para ver sus detalles" />
+                        <Label styleClass="act-empty-sub" text="Haz clic derecho sobre el mapa para añadir anotaciones" />
+                    </VBox>
+
+                    <!-- Detail content -->
+                    <VBox fx:id="detailContent" managed="false" spacing="0" visible="false" VBox.vgrow="ALWAYS">
+
+                        <!-- Detail header -->
+                        <HBox alignment="CENTER_LEFT" spacing="12" styleClass="act-detail-header">
+                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                <Label fx:id="detailName" styleClass="act-detail-title" />
+                                <Label fx:id="detailDate" styleClass="act-detail-date" />
+                            </VBox>
+                            <Button fx:id="detailMenuBtn" onAction="#handleDetailMenu" styleClass="act-menu-btn" text="⋮ Opciones" />
+                        </HBox>
+
+                        <!-- Map + stats side by side -->
+                        <HBox spacing="0" VBox.vgrow="ALWAYS">
+
+                            <!-- Map + elevation profile -->
+                            <VBox spacing="0" styleClass="act-map-and-profile" HBox.hgrow="ALWAYS">
+                                <StackPane minHeight="320" prefHeight="520" styleClass="act-map-container" VBox.vgrow="ALWAYS">
+                                    <ScrollPane fx:id="mapScrollPane" fitToHeight="false" fitToWidth="false" pannable="true" styleClass="act-map-scroll">
+                                        <Pane fx:id="mapScrollContent" prefHeight="10" prefWidth="10" />
+                                    </ScrollPane>
+                                    <!-- Zoom controls overlaid -->
+                                    <VBox alignment="TOP_LEFT" mouseTransparent="false" pickOnBounds="false" spacing="4" styleClass="act-map-controls" StackPane.alignment="TOP_LEFT">
+                                        <Button onAction="#handleZoomIn" styleClass="act-map-ctrl-btn" text="+" />
+                                        <Button onAction="#handleZoomOut" styleClass="act-map-ctrl-btn" text="−" />
+                                        <Button onAction="#handleZoomFit" styleClass="act-map-ctrl-btn" text="⊡" />
+                                    </VBox>
+                                    <!-- Region label bottom-left -->
+                                    <Label fx:id="mapRegionLabel" pickOnBounds="false" styleClass="act-map-scale" text="" StackPane.alignment="BOTTOM_LEFT" />
+                                </StackPane>
+                                <VBox spacing="8" styleClass="act-profile-card">
+                                    <Pane fx:id="elevationChartPane" minHeight="96" prefHeight="120" styleClass="act-profile-chart-pane" />
+                                    <Label fx:id="profileHoverLabel" styleClass="act-profile-hover" text="Pasa el ratón por el perfil para resaltar el punto en el mapa" />
+                                </VBox>
+                            </VBox>
+
+                            <!-- Stats sidebar -->
+                            <ScrollPane fitToWidth="true" minWidth="200" prefWidth="220" styleClass="act-stats-scroll">
+                                <VBox spacing="0" styleClass="act-stats-panel">
+                                    <Label styleClass="act-stats-title" text="Estadísticas" />
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="📏" />
+                                        <Label styleClass="act-stat-row-label" text="Distancia" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sDistancia" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="⏱" />
+                                        <Label styleClass="act-stat-row-label" text="Duración" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sDuracion" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="💨" />
+                                        <Label styleClass="act-stat-row-label" text="Vel. media" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sVelocidad" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="🔄" />
+                                        <Label styleClass="act-stat-row-label" text="Ritmo medio" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sRitmo" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <Separator styleClass="act-stat-separator" />
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="⬆" />
+                                        <Label styleClass="act-stat-row-label" text="Desnivel +" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sAscenso" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="⬇" />
+                                        <Label styleClass="act-stat-row-label" text="Desnivel −" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sDescenso" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="▲" />
+                                        <Label styleClass="act-stat-row-label" text="Alt. mínima" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sAltMin" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="act-stat-row">
+                                        <Label styleClass="act-stat-row-icon" text="▲" />
+                                        <Label styleClass="act-stat-row-label" text="Alt. máxima" HBox.hgrow="ALWAYS" />
+                                        <Label fx:id="sAltMax" styleClass="act-stat-row-value" />
+                                    </HBox>
+                                </VBox>
+                            </ScrollPane>
+                        </HBox>
+
+                        <!-- Annotations section -->
+                        <VBox spacing="0" styleClass="act-annot-section">
+                            <HBox alignment="CENTER_LEFT" spacing="12" styleClass="act-annot-header">
+                                <Label fx:id="annotTitle" styleClass="act-annot-title" text="Anotaciones (0)" HBox.hgrow="ALWAYS" />
+                                <HBox alignment="CENTER" spacing="12">
+                                    <Label fx:id="cntPunto" styleClass="annot-counter,annot-point" text="● Punto (0)" />
+                                    <Label fx:id="cntTexto" styleClass="annot-counter,annot-text" text="T Texto (0)" />
+                                    <Label fx:id="cntLinea" styleClass="annot-counter,annot-line" text="— Línea (0)" />
+                                    <Label fx:id="cntCirculo" styleClass="annot-counter,annot-circle" text="○ Círculo (0)" />
+                                </HBox>
+                            </HBox>
+                            <ScrollPane fitToWidth="true" minHeight="100" prefHeight="130" styleClass="act-annot-scroll">
+                                <VBox fx:id="annotContainer" spacing="0" styleClass="act-annot-list" />
+                            </ScrollPane>
+                        </VBox>
+
+                    </VBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
